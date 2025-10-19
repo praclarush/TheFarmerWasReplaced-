@@ -1,9 +1,11 @@
 import farms
 import movement
 import static
+import tools
+import factory
+import Cactus
 
-movement.set_grid_size(5, 5)
-clear()
-item = static.get_plant_by_item(Items.Pumpkin)
-farm = farms.create_farm_function(item)
-farm()
+#clear()
+
+movement.move_to_origin()
+Cactus.farm_catus()

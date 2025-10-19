@@ -22,7 +22,7 @@ def create_hey_farm(plant):
 		item_needed = tools.need_item(plant["item"], plant["min"])
 	
 		if (not item_needed):
-			return False
+			return True
 		
 		quick_print("Item ", plant["name"], " Needed")
 		clear() #reset the farm, quicker then retilling grounds
@@ -30,10 +30,10 @@ def create_hey_farm(plant):
 		while (item_needed):		
 			if (plant["power"] and num_items(Items.Power) < min_power_req):
 				print("Out of Power")
-				return
+				return False
 			movement.traverse_farm(harvest)	
 			item_needed = tools.need_item(plant["item"], plant["min"])
-			
+		return True
 		
 	return hey
 	
@@ -42,15 +42,18 @@ def create_bush_farm(plant):
 		item_needed = tools.need_item(plant["item"], plant["min"])
 	
 		if (not item_needed):
-			return False
+			return True
 		
 		quick_print("Item ", plant["name"], " Needed")
 	
 		while (item_needed):				
+			if (plant["power"] and num_items(Items.Power) < min_power_req):
+				print("Out of Power")
+				return False
 			movement.traverse_farm(factory.create_planting_function(plant["entity"], plant["water"]))				
 			movement.traverse_farm(harvest)	
 			item_needed = tools.need_item(plant["item"], plant["min"])
-			
+		return True
 	return wood
 
 def create_tree_farm(plant):
@@ -58,15 +61,18 @@ def create_tree_farm(plant):
 		item_needed = tools.need_item(plant["item"], plant["min"])
 	
 		if (not item_needed):
-			return False
+			return True
 		
 		quick_print("Item ", plant["name"], " Needed")
 		
 		while (item_needed):
+			if (plant["power"] and num_items(Items.Power) < min_power_req):
+				print("Out of Power")
+				return	False	
 			movement.traverse_farm(factory.create_plant_tree_function())
 			movement.traverse_farm(harvest)
 			item_needed = tools.need_item(plant["item"], plant["min"])
-		
+		return True
 	return wood
 	
 def create_carret_farm(plant):
@@ -74,14 +80,19 @@ def create_carret_farm(plant):
 		item_needed = tools.need_item(plant["item"], plant["min"])
 	
 		if (not item_needed):
-			return False
+			return True
 		
 		quick_print("Item ", plant["name"], " Needed")
 			
 		while (item_needed):		
+			if (plant["power"] and num_items(Items.Power) < min_power_req):
+				print("Out of Power")
+				return	False
 			movement.traverse_farm(factory.create_planting_function(plant))						
 			movement.traverse_farm(harvest)					
 			item_needed = tools.need_item(plant["item"], plant["min"])
+			
+		return True
 	return carret
 
 
@@ -90,11 +101,15 @@ def create_pumpkin_farm(plant):
 		item_needed = tools.need_item(plant["item"], plant["min"])
 		
 		if (not item_needed):
-			return False
+			return True
 			
 		quick_print("Item ", plant["name"], " Needed")		
 
 		while (item_needed):
+			if (plant["power"] and num_items(Items.Power) < min_power_req):
+				print("Out of Power")
+				return False
+						
 			movement.traverse_farm(factory.create_planting_function(plant))
 			bad_pumpkin_list = movement.traverse_farm_returns(factory.create_replanting_function(plant))
 			
@@ -109,6 +124,8 @@ def create_pumpkin_farm(plant):
 					bad_pumpkin_list = movement.traverse_farm_returns(replantFunc)
 			movement.move_to_origin()
 			harvest()
+			item_needed = tools.need_item(plant["item"], plant["min"])
+		return True
 
 	return pumpkin
 
@@ -117,7 +134,7 @@ def create_sunflower_farm(plant):
 		item_needed = tools.need_item(plant["item"], plant["min"])
 	
 		if (not item_needed):
-			return False
+			return True
 		
 		quick_print("Item ", plant["name"], " Needed")
 		
@@ -138,4 +155,5 @@ def create_sunflower_farm(plant):
 						harvest()			
 
 			item_needed = tools.need_item(plant["item"], plant["min"])		
+		return True
 	return sunflower

@@ -1,3 +1,5 @@
+ALL_DIRECTIONS = [North, South, East, West]
+
 PLANTS = [	
 	{
 		"name":"sunflower",
@@ -7,8 +9,9 @@ PLANTS = [
 		"water": False,
 		"ground": Grounds.Soil,
 		"power": False,
-		"min":1000,
-		"badEntity": None
+		"min":5000,
+		"badEntity": None,
+		"enabled": True
 	},
 	{
 		"name":"tree",
@@ -18,8 +21,9 @@ PLANTS = [
 		"water": False,
 		"ground": Grounds.Soil,		
 		"power": True,
-		"min":50000000,
-		"badEntity": None
+		"min":5000000,
+		"badEntity": None,
+		"enabled": True
 	},
 	{
 		"name":"hay",
@@ -29,8 +33,9 @@ PLANTS = [
 		"fertilize": False,
 		"water": False,
 		"power": True,
-		"min":5000000,
-		"badEntity": None
+		"min":1500000,
+		"badEntity": None,
+		"enabled": True
 	},	
 	{
 		"name":"carrot",
@@ -41,7 +46,8 @@ PLANTS = [
 		"water": False,
 		"power": True,
 		"min":100000,
-		"badEntity": None
+		"badEntity": None,
+		"enabled": True
 	},
 	{
 		"name":"pumpkin",
@@ -52,7 +58,8 @@ PLANTS = [
 		"water": False,
 		"power": True,
 		"min":100000,
-		"badEntity": Entities.Dead_Pumpkin
+		"badEntity": Entities.Dead_Pumpkin,
+		"enabled": True
 	}	
 ]
 
@@ -63,7 +70,12 @@ WAITING_PLANTS = [
 		"entity":Entities.Cactus,
 		"item":Items.Cactus,
 		"ground": Grounds.Soil,
-		"min":100000
+		"fertilize": False,
+		"water": False,
+		"power": True,
+		"min":100000,
+		"badEntity": None,
+		"enabled": False		
 	}
 ]
 
