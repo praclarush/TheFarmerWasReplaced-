@@ -11,7 +11,7 @@ PLANTS = [
 		"power": False,
 		"min":5000,
 		"badEntity": None,
-		"enabled": True
+		"enabled": False
 	},
 	{
 		"name":"tree",
@@ -23,7 +23,7 @@ PLANTS = [
 		"power": True,
 		"min":5000000,
 		"badEntity": None,
-		"enabled": True
+		"enabled": False
 	},
 	{
 		"name":"hay",
@@ -35,7 +35,7 @@ PLANTS = [
 		"power": True,
 		"min":1500000,
 		"badEntity": None,
-		"enabled": True
+		"enabled": False
 	},	
 	{
 		"name":"carrot",
@@ -47,7 +47,7 @@ PLANTS = [
 		"power": True,
 		"min":100000,
 		"badEntity": None,
-		"enabled": True
+		"enabled": False
 	},
 	{
 		"name":"pumpkin",
@@ -59,12 +59,8 @@ PLANTS = [
 		"power": True,
 		"min":100000,
 		"badEntity": Entities.Dead_Pumpkin,
-		"enabled": True
-	}	
-]
-
-WAITING_PLANTS = [
-
+		"enabled": False
+	},
 	{
 		"name":"cactus",
 		"entity":Entities.Cactus,
@@ -73,10 +69,13 @@ WAITING_PLANTS = [
 		"fertilize": False,
 		"water": False,
 		"power": True,
-		"min":100000,
+		"min":500000,
 		"badEntity": None,
-		"enabled": False		
+		"enabled": True		
 	}
+]
+
+WAITING_PLANTS = [	
 ]
 
 

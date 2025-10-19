@@ -14,20 +14,24 @@ def traverse_farm_returns(cell_function):
 	
 	for x in range(grid[0]):
 		for y in range(grid[1]):
-			move_to_location(x,y)
 			result = cell_function()
 			if (result != None):
 				list.append(result)
+			move(North)	
+		move_to_location(get_pos_x(), 0)
+		move(East)		
+	move_to_origin()	
 	return list		
 
 def traverse_farm(cell_function):
 	move_to_origin()
 	grid = get_grid_size()
 	for x in range(grid[0]):
-		for y in range(grid[1]):
-			move_to_location(x,y)
+		for y in range(grid[1]):			
 			cell_function()
-
+			move(North)
+		move_to_location(get_pos_x(), 0)
+		move(East)		
 	move_to_origin()
 	return True	
 	
