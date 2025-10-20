@@ -1,3 +1,4 @@
+import __builtins__
 ALL_DIRECTIONS = [North, South, East, West]
 
 MIN_POWER_REQ = 500
@@ -24,7 +25,7 @@ PLANTS = [
 		"power": False,
 		"min":5000,
 		"badEntity": None,
-		"worldSize": 16,
+		"worldSize": 12,
 		"enabled": True
 	},
 	{
@@ -37,7 +38,7 @@ PLANTS = [
 		"power": True,
 		"min":5500000,
 		"badEntity": None,
-		"worldSize": 16,		
+		"worldSize": 12,		
 		"enabled": True
 	},
 	{
@@ -48,9 +49,9 @@ PLANTS = [
 		"fertilize": False,
 		"water": False,
 		"power": True,
-		"min":1750000,
+		"min":2000000,
 		"badEntity": None,
-		"worldSize": 16,
+		"worldSize": 3,
 		"enabled": True
 	},	
 	{
@@ -61,9 +62,9 @@ PLANTS = [
 		"fertilize": False,
 		"water": False,
 		"power": True,
-		"min":150000,
+		"min":260000,
 		"badEntity": None,
-		"worldSize": 16,
+		"worldSize": 10,
 		"enabled": True
 	},
 	{
@@ -74,9 +75,9 @@ PLANTS = [
 		"fertilize": True,
 		"water": False,
 		"power": True,
-		"min":400000,
+		"min":5000000,
 		"badEntity": Entities.Dead_Pumpkin,
-		"worldSize": 16,
+		"worldSize": 22,
 		"enabled": True
 	},
 	{
@@ -89,7 +90,7 @@ PLANTS = [
 		"power": True, 
 		"min":75000,
 		"badEntity": None,
-		"worldSize": 16,
+		"worldSize": 22,
 		"enabled": True		
 	},
 	{	
@@ -102,7 +103,7 @@ PLANTS = [
 		"power": True,
 		"min":110000,
 		"badEntity": None,
-		"worldSize": 16,
+		"worldSize": 22,
 		"enabled": True		
 	},
 	{	
@@ -115,8 +116,21 @@ PLANTS = [
 		"power": True,
 		"min":75000,
 		"badEntity": None,
-		"worldSize": 16, #farm can't work if not even
+		"worldSize": 22, #farm can't work if not even
 		"enabled": True		
+	},
+	{	
+		"name":"Polyculture",
+		"entity":Entities.Grass, 
+		"item":Items.Hey
+		"ground": Grounds.Grassland,
+		"fertilize": False,
+		"water": False,
+		"power": True,
+		"min":100, # itteration count since, farm generates multiple items
+		"badEntity": None,
+		"worldSize": 5, #farm can't work if not even
+		"enabled": False		
 	}
 ]
 
