@@ -1,11 +1,38 @@
-GRID_SIZE = [get_world_size(), get_world_size()]
+import static
 
-def set_grid_size(x, y):
-	global GRID_SIZE
-	GRID_SIZE = [x, y]	
-	
+def get_opposite_direction(direction):
+	if (direction == North):
+		return South
+	elif(direction == South):
+		return North
+	elif(direction == East):
+		return West
+	elif(direction == West):
+		return East
+		
+#Depth First Search ref - https://en.wikipedia.org/wiki/Depth-first_search
+def explore_path(direction, target):
+	if (not move(direction)):
+		return False
+
+	if (get_entity_type() == target):
+		harvest()
+		return True
+
+	for explore_direction in static.ALL_DIRECTIONS:
+		if (get_opposite_direction(explore_direction) == direction):
+			continue
+
+		if (explore_path(explore_direction, target)):
+			return True
+
+	move(get_opposite_direction(direction))
+
+def set_grid_size(size):
+	set_world_size(size)
+		
 def get_grid_size():
-	return GRID_SIZE
+	return [get_world_size(), get_world_size()]
 	
 def traverse_farm_returns(cell_function):
 	move_to_origin()
@@ -40,6 +67,31 @@ def move_to_origin():
 		move(West)
 	while get_pos_y() > 0:
 		move(South)
+		
+def move_to_x_position(x):
+	current_x = get_pos_x()
+	moves = x - current_x
+	if (moves < 0):
+		direction = West
+	else:
+		direction = East
+
+	for i in range(abs(moves)):
+		if (not move(direction)):
+			return False
+	return True
+
+def move_to_y_position(y):
+	current_y = get_pos_y()
+	moves = y - current_y
+	if (moves < 0):
+		direction = South
+	else:
+		direction = North
+	for i in range(abs(moves)):
+		if (not move(direction)):
+			return False
+	return True
 		
 def move_to_location(x, y):
 	current_X = get_pos_x()

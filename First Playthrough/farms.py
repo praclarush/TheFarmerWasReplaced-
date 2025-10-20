@@ -2,8 +2,8 @@ import movement
 import tools
 import factory
 import sorting
+import static
 
-min_power_req = 100
 
 def create_farm_function(plant):
 	if (plant["item"] == Items.Hay):
@@ -18,6 +18,10 @@ def create_farm_function(plant):
 		return create_sunflower_farm(plant)
 	elif(plant["item"] == Items.Cactus):
 		return create_cactus_farm(plant)
+	elif(plant["item"] == Items.Gold):
+		return create_maze_farm(plant)
+	elif(plant["item"] == Items.Bone):
+		return create_dino_farm(plant)
 	
 
 def create_hey_farm(plant):
@@ -31,7 +35,7 @@ def create_hey_farm(plant):
 		clear() #reset the farm, quicker then retilling grounds
 	
 		while (item_needed):		
-			if (plant["power"] and num_items(Items.Power) < min_power_req):
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
 				print("Out of Power")
 				return False
 			movement.traverse_farm(harvest)	
@@ -51,7 +55,7 @@ def create_bush_farm(plant):
 		quick_print("Item ", plant["name"], " Needed")
 	
 		while (item_needed):				
-			if (plant["power"] and num_items(Items.Power) < min_power_req):
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
 				print("Out of Power")
 				return False
 			movement.traverse_farm(factory.create_planting_function(plant["entity"], plant["water"]))				
@@ -72,9 +76,10 @@ def create_tree_farm(plant):
 		quick_print("Item ", plant["name"], " Needed")
 		
 		while (item_needed):
-			if (plant["power"] and num_items(Items.Power) < min_power_req):
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
 				print("Out of Power")
-				return	False	
+				return	False	 	
+			
 			movement.traverse_farm(factory.create_plant_tree_function())
 			movement.traverse_farm(harvest)
 			
@@ -93,9 +98,14 @@ def create_carret_farm(plant):
 		quick_print("Item ", plant["name"], " Needed")
 			
 		while (item_needed):		
-			if (plant["power"] and num_items(Items.Power) < min_power_req):
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
 				print("Out of Power")
 				return	False
+			
+			if (not tools.can_afford_item(plant["entity"])):
+				print("Cannot afford: ", plant["entity"])
+				return False
+				
 			movement.traverse_farm(factory.create_planting_function(plant))						
 			movement.traverse_farm(harvest)				
 				
@@ -114,8 +124,12 @@ def create_pumpkin_farm(plant):
 		quick_print("Item ", plant["name"], " Needed")		
 
 		while (item_needed):
-			if (plant["power"] and num_items(Items.Power) < min_power_req):
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
 				print("Out of Power")
+				return False
+				
+			if (not tools.can_afford_item(plant["entity"])):
+				print("Cannot afford: ", plant["entity"])
 				return False
 						
 			movement.traverse_farm(factory.create_planting_function(plant))
@@ -152,6 +166,15 @@ def create_sunflower_farm(plant):
 		
 		while (item_needed):		
 			result = movement.traverse_farm_returns(factory.create_messured_planting_function(plant))
+			
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
+				print("Out of Power")
+				return False
+				
+			if (not tools.can_afford_item(plant["entity"])):
+				print("Cannot afford: ", plant["entity"])
+				return False			
+			
 			sunflower_list = result
 			
 			for i in (range(15, 6, -1)): #shouldn't this be 6?
@@ -179,9 +202,13 @@ def create_cactus_farm(plant):
 		quick_print("Item ", plant["name"], " Needed")
 
 		while (item_needed):
-			if (plant["power"] and num_items(Items.Power) < min_power_req):
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
 				print("Out of Power")
 				return	False
+				
+			if (not tools.can_afford_item(plant["entity"])):
+				print("Cannot afford: ", plant["entity"])
+				return False	
 
 			movement.traverse_farm(factory.create_planting_function(plant))
 			grid_size = movement.get_grid_size()
@@ -192,3 +219,95 @@ def create_cactus_farm(plant):
 			
 		return True
 	return cactus
+	
+def create_maze_farm(plant):
+	def maze():
+		item_needed = tools.need_item(plant["item"], plant["min"])
+		
+		if (not item_needed):
+			return True
+			
+		quick_print("Item ", plant["name"], " Needed")
+		
+		while (item_needed):
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
+				print("Out of Power")
+				return False
+				
+			if (not tools.can_afford_item(plant["entity"])):
+				print("Cannot afford: ", plant["entity"])
+				return False
+				
+			if (get_entity_type() != Entities.Hedge):
+				grid = movement.get_grid_size()
+				tools.generate_maze(grid[0] * grid[1])
+				
+			for direction in static.ALL_DIRECTIONS:
+				if (movement.explore_path(direction, Entities.Treasure)):
+					break					
+		
+			item_needed = tools.need_item(plant["item"], plant["min"])
+		return True
+	return maze
+	
+def create_dino_farm(plant):
+	def dinos():
+		item_needed = tools.need_item(plant["item"], plant["min"])
+		
+		if (not item_needed):
+			return True
+			
+		quick_print("Item ", plant["name"], " Needed")
+		
+		while(item_needed):
+			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
+				print("Out of Power")
+				return False
+				
+			if (not tools.can_afford_item(plant["entity"])):
+				print("Cannot afford: ", plant["entity"])
+				return False
+			
+			world_size = get_world_size()
+			can_move = True
+			
+			movement.move_to_origin()
+
+			change_hat(Hats.Dinosaur_Hat)
+				
+			while can_move:
+				for x in range(world_size / 2):
+					result = movement.move_to_y_position(world_size - 1)
+					if ((not move(East)) or (not result)):
+						can_move = False
+						break
+			
+					result = movement.move_to_y_position(1)
+					if (not result):
+						can_move = False
+						break
+				
+					if (x != world_size / 2 - 1):
+						if not move(East):
+							can_move = False
+							break
+			
+				if (not can_move):
+					break
+			
+				if (not movement.move_to_y_position(0)):
+					can_move = false
+			
+				if (not movement.move_to_x_position(0)):
+					can_move = false
+			change_hat(Hats.Brown_Hat)
+			item_needed = tools.need_item(plant["item"], plant["min"])
+	return dinos
+	
+	
+	
+	
+	
+	
+	
+		

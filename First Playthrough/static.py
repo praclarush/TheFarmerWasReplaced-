@@ -1,5 +1,18 @@
 ALL_DIRECTIONS = [North, South, East, West]
 
+MIN_POWER_REQ = 500
+
+# ---------------------------------------------------------	#
+# name - The Name of the Plant 								#
+# entity - The Entity to Plant 								#
+# item - The Item Farmed 									#
+# fertilize - Use Furtilizer when Planting 					#
+# ground - Water the plant when Planting 					#
+# min - The Miniumn amount of the Item to maintain 			#
+# badEntity - if the Plant has an Invalid Entity state		#
+# worldSize - sets the size of the False					#
+# enabled - Enable farming of the Plant 					#
+# ---------------------------------------------------------	#
 PLANTS = [	
 	{
 		"name":"sunflower",
@@ -11,7 +24,8 @@ PLANTS = [
 		"power": False,
 		"min":5000,
 		"badEntity": None,
-		"enabled": False
+		"worldSize": 16,
+		"enabled": True
 	},
 	{
 		"name":"tree",
@@ -21,9 +35,10 @@ PLANTS = [
 		"water": False,
 		"ground": Grounds.Soil,		
 		"power": True,
-		"min":5000000,
+		"min":5500000,
 		"badEntity": None,
-		"enabled": False
+		"worldSize": 16,		
+		"enabled": True
 	},
 	{
 		"name":"hay",
@@ -33,9 +48,10 @@ PLANTS = [
 		"fertilize": False,
 		"water": False,
 		"power": True,
-		"min":1500000,
+		"min":1750000,
 		"badEntity": None,
-		"enabled": False
+		"worldSize": 16,
+		"enabled": True
 	},	
 	{
 		"name":"carrot",
@@ -45,9 +61,10 @@ PLANTS = [
 		"fertilize": False,
 		"water": False,
 		"power": True,
-		"min":100000,
+		"min":150000,
 		"badEntity": None,
-		"enabled": False
+		"worldSize": 16,
+		"enabled": True
 	},
 	{
 		"name":"pumpkin",
@@ -57,9 +74,10 @@ PLANTS = [
 		"fertilize": True,
 		"water": False,
 		"power": True,
-		"min":100000,
+		"min":400000,
 		"badEntity": Entities.Dead_Pumpkin,
-		"enabled": False
+		"worldSize": 16,
+		"enabled": True
 	},
 	{
 		"name":"cactus",
@@ -68,14 +86,55 @@ PLANTS = [
 		"ground": Grounds.Soil,
 		"fertilize": False,
 		"water": False,
-		"power": True,
-		"min":500000,
+		"power": True, 
+		"min":75000,
 		"badEntity": None,
+		"worldSize": 16,
+		"enabled": True		
+	},
+	{	
+		"name":"maze",
+		"entity":Entities.Bush,
+		"item":Items.Gold,
+		"ground": Grounds.Soil,
+		"fertilize": False,
+		"water": False,
+		"power": True,
+		"min":110000,
+		"badEntity": None,
+		"worldSize": 16,
+		"enabled": True		
+	},
+	{	
+		"name":"dinos",
+		"entity":Entities.Apple,
+		"item":Items.Bone,
+		"ground": Grounds.Grassland,
+		"fertilize": False,
+		"water": False,
+		"power": True,
+		"min":75000,
+		"badEntity": None,
+		"worldSize": 16, #farm can't work if not even
 		"enabled": True		
 	}
 ]
 
+# Weird_substance
 WAITING_PLANTS = [	
+	{	
+		"name":"WeirdSubstance",
+		"entity":Entities.Bush,
+		"item":Items.Weird_Substance,
+		"ground": Grounds.Grassland,
+		"fertilize": True,
+		"water": False,
+		"power": True,
+		"min":500000,
+		"badEntity": None,
+		"worldSize": 16,
+		"enabled": False		
+	}
 ]
 
 

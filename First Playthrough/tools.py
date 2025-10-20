@@ -1,3 +1,8 @@
+def generate_maze(size):	
+	plant(Entities.Bush)
+	substance = size * num_unlocked(Unlocks.Mazes)
+	use_item(Items.Weird_Substance, substance)
+
 def is_even(n):
 	return n % 2 == 0
 	
@@ -25,15 +30,13 @@ def get_entity_from_item(item = Items.Hay):
 def need_item(item, min_count):
 	return num_items(item) < min_count
 	
-def can_afford_cost(entity):
+
+def can_afford_item(entity):
 	cost = get_cost(entity)
-	
-	if (entity == Entities.Carrot):
-		if ((num_items(Items.Hay) < cost[Items.Hay]) or (num_items(Items.Wood) < cost[Items.Wood])):
+	for item in cost:
+		if (num_items(item) < cost[item]):
+			quick_print ("Not enough ", item, " to plant ", entity)
 			return False
-	elif(entity== Entities.Pumpkin):
-		if (num_items(Items.Carrot) < cost[Items.Carrot]):
-			return False	
 	return True
 	
 def waiting_harvest():

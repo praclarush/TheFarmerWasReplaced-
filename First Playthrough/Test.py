@@ -1,11 +1,4 @@
-import farms
-import movement
-import static
 import tools
-import factory
-import Cactus
 
-#clear()
-#movement.set_grid_size(5, 5)
-movement.move_to_origin()
-movement.traverse_farm_returns(harvest)
+result = tools.can_afford_item(Entities.Carrot)
+quick_print(result)
