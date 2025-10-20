@@ -5,6 +5,7 @@ MIN_POWER_REQ = 500
 
 # ---------------------------------------------------------	#
 # name - The Name of the Plant 								#
+# farm - The Entity to use	 								#
 # entity - The Entity to Plant 								#
 # item - The Item Farmed 									#
 # fertilize - Use Furtilizer when Planting 					#
@@ -14,9 +15,10 @@ MIN_POWER_REQ = 500
 # worldSize - sets the size of the False					#
 # enabled - Enable farming of the Plant 					#
 # ---------------------------------------------------------	#
-PLANTS = [	
+Farms = [	
 	{
-		"name":"sunflower",
+		"name":"SunflowerFarm",
+		"farm": "Sunflower",
 		"entity":Entities.Sunflower,
 		"item":Items.Power,
 		"fertilize": False,
@@ -26,23 +28,39 @@ PLANTS = [
 		"min":5000,
 		"badEntity": None,
 		"worldSize": 12,
-		"enabled": True
+		"enabled": False
 	},
 	{
-		"name":"tree",
+		"name":"TreeFarm",
+		"farm": "Tree",
 		"entity":Entities.Tree,
 		"item":Items.Wood,
 		"fertilize": False,
 		"water": False,
-		"ground": Grounds.Soil,		
+		"ground": Grounds.Grassland,		
 		"power": True,
 		"min":5500000,
 		"badEntity": None,
 		"worldSize": 12,		
-		"enabled": True
+		"enabled": False
 	},
 	{
-		"name":"hay",
+		"name":"BushFarm",
+		"farm": "Bush",
+		"entity":Entities.Bush,
+		"item":Items.Wood,
+		"fertilize": False,
+		"water": False,
+		"ground": Grounds.Grassland,		
+		"power": True,
+		"min":5500000,
+		"badEntity": None,
+		"worldSize": 12,		
+		"enabled": False
+	},
+	{
+		"name":"HayFarm",
+		"farm": "Hey",
 		"entity":Entities.Grass,
 		"item":Items.Hay,
 		"ground": Grounds.Grassland,
@@ -52,10 +70,11 @@ PLANTS = [
 		"min":2000000,
 		"badEntity": None,
 		"worldSize": 3,
-		"enabled": True
+		"enabled": False
 	},	
 	{
-		"name":"carrot",
+		"name":"CarrotFarm",
+		"farm": "Carrot",
 		"entity":Entities.Carrot,
 		"item":Items.Carrot,
 		"ground": Grounds.Soil,
@@ -65,23 +84,25 @@ PLANTS = [
 		"min":260000,
 		"badEntity": None,
 		"worldSize": 10,
-		"enabled": True
+		"enabled": False
 	},
 	{
-		"name":"pumpkin",
+		"name":"PumpkinFarm",
+		"farm": "Pumpkin",
 		"entity":Entities.Pumpkin,
 		"item":Items.Pumpkin,
 		"ground": Grounds.Soil,
-		"fertilize": True,
+		"fertilize": False,
 		"water": False,
 		"power": True,
 		"min":5000000,
 		"badEntity": Entities.Dead_Pumpkin,
-		"worldSize": 22,
-		"enabled": True
+		"worldSize": get_world_size(),
+		"enabled": False
 	},
 	{
-		"name":"cactus",
+		"name":"CactusFarm",
+		"farm": "Cactus",
 		"entity":Entities.Cactus,
 		"item":Items.Cactus,
 		"ground": Grounds.Soil,
@@ -90,52 +111,83 @@ PLANTS = [
 		"power": True, 
 		"min":75000,
 		"badEntity": None,
-		"worldSize": 22,
-		"enabled": True		
+		"worldSize": get_world_size(),
+		"enabled": False		
 	},
 	{	
-		"name":"maze",
+		"name":"MazeFarm",
+		"farm": "Maze",
 		"entity":Entities.Bush,
 		"item":Items.Gold,
-		"ground": Grounds.Soil,
+		"ground": Grounds.Grassland,
 		"fertilize": False,
 		"water": False,
 		"power": True,
 		"min":110000,
 		"badEntity": None,
-		"worldSize": 22,
-		"enabled": True		
+		"worldSize": get_world_size(),
+		"enabled": False		
 	},
 	{	
-		"name":"dinos",
+		"name":"DinoFarm",
+		"farm": "Dino",
 		"entity":Entities.Apple,
 		"item":Items.Bone,
 		"ground": Grounds.Grassland,
 		"fertilize": False,
 		"water": False,
 		"power": True,
-		"min":75000,
+		"min":1000000,
 		"badEntity": None,
-		"worldSize": 22, #farm can't work if not even
+		"worldSize": get_world_size(), #farm can't work if not even
 		"enabled": True		
 	},
 	{	
-		"name":"Polyculture",
+		"name":"PolycultureHeyFarm",
+		"farm": "Polyculture",	
 		"entity":Entities.Grass, 
-		"item":Items.Hey
+		"item":Items.Hay,
 		"ground": Grounds.Grassland,
 		"fertilize": False,
 		"water": False,
 		"power": True,
-		"min":100, # itteration count since, farm generates multiple items
+		"min":5000000,
 		"badEntity": None,
-		"worldSize": 5, #farm can't work if not even
-		"enabled": False		
+		"worldSize": get_world_size(),
+		"enabled": True		
+	},
+	{	
+		"name":"PolycultureBushFarm",
+		"farm": "Polyculture",	
+		"entity":Entities.Bush, 
+		"item":Items.Wood,
+		"ground": Grounds.Grassland,
+		"fertilize": False,
+		"water": False,
+		"power": True,
+		"min":5000000,
+		"badEntity": None,
+		"worldSize": get_world_size(),
+		"enabled": True		
+	},
+	{	
+		"name":"PolycultureCarrotFarm",	
+		"farm": "Polyculture",	
+		"entity":Entities.Carrot,
+		"item":Items.Carrot,
+		"ground": Grounds.Soil,
+		"fertilize": False,
+		"water": False,
+		"power": True,
+		"min":260000,
+		"badEntity": None,
+		"worldSize": get_world_size(),
+		"enabled": True		
 	}
 ]
 
 # Weird_substance
-WAITING_PLANTS = [	
+WAITING_Farms = [	
 	{	
 		"name":"WeirdSubstance",
 		"entity":Entities.Bush,
@@ -152,15 +204,20 @@ WAITING_PLANTS = [
 ]
 
 
-def get_plant_by_item(item):
-	for plant in PLANTS:
-		if (plant["item"] == item):
-			return plant
+def get_farm_by_item(item):
+	for farm in Farms:
+		if (farm["item"] == item):
+			return farm
 	return None
 
-def get_plant_by_entity(entity):
-	for plant in PLANTS:
-		if (plant["entity"] == entity):
-			return plant
+def get_farm_by_entity(entity):
+	for farm in Farms:
+		if (farm["entity"] == entity):
+			return farm
 	return None
-	
+
+def get_farm_by_name(name):
+	for farm in Farms:
+		if (farm["name"] == name):
+			return farm
+	return None

@@ -42,10 +42,10 @@ def create_planting_function(entity):
 		if (get_ground_type() != entity["ground"]):
 			till()			
 		if (entity["water"]):
-			tools.water_ground()	
-		if (entity["fertilize"]):
-			use_item(Items.Fertilizer)			
+			tools.water_ground()			
 		plant(entity["entity"])		
+		if (entity["fertilize"]):
+			use_item(Items.Fertilizer)	
 		return tools.get_current_pos()
 	return planting_function
 	

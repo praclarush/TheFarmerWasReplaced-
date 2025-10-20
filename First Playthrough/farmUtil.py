@@ -4,28 +4,32 @@ import factory
 import sorting
 import static
 
+def create_farm_function(farm):
+	if (farm["farm"] == "Hey"):
+		return create_basic_farm(farm)
+	elif(farm["farm"] == "Bush"):
+		return create_basic_farm(farm)
+	elif(farm["farm"] == "Tree"):
+		return create_tree_farm(farm)
+	elif(farm["farm"] == "Pumpkin"):
+		return create_pumpkin_farm(farm)
+	elif(farm["farm"] == "Carrot"):
+		return create_carret_farm(farm)		
+	elif(farm["farm"] == "Sunflower"):
+		return create_sunflower_farm(farm)
+	elif(farm["farm"] == "Cactus"):
+		return create_cactus_farm(farm)
+	elif(farm["farm"] == "Maze"):
+		return create_maze_farm(farm)
+	elif(farm["farm"] == "Dino"):
+		return create_dino_farm(farm)
+	elif(farm["farm"] == "Polyculture"):
+		return create_polyculture_farm(farm)
+	else:
+		return None
 
-def create_farm_function(plant):
-	if (plant["item"] == Items.Hay):
-		return create_hey_farm(plant)
-	elif(plant["item"] == Items.Wood):
-		return create_tree_farm(plant)
-	elif(plant["item"] == Items.Pumpkin):
-		return create_pumpkin_farm(plant)
-	elif(plant["item"] == Items.Carrot):
-		return create_carret_farm(plant)		
-	elif(plant["item"] == Items.Power):
-		return create_sunflower_farm(plant)
-	elif(plant["item"] == Items.Cactus):
-		return create_cactus_farm(plant)
-	elif(plant["item"] == Items.Gold):
-		return create_maze_farm(plant)
-	elif(plant["item"] == Items.Bone):
-		return create_dino_farm(plant)
-	
-
-def create_hey_farm(plant):
-	def hey():
+def create_basic_farm(plant):
+	def basic():
 		item_needed = tools.need_item(plant["item"], plant["min"])
 	
 		if (not item_needed):
@@ -43,7 +47,7 @@ def create_hey_farm(plant):
 			item_needed = tools.need_item(plant["item"], plant["min"])		
 				
 		return True		
-	return hey
+	return basic
 	
 def create_bush_farm(plant):
 	def wood():
@@ -114,42 +118,57 @@ def create_carret_farm(plant):
 		return True
 	return carret
 
-def create_pumpkin_farm(plant):
+def create_pumpkin_farm(farm):
 	def pumpkin():
-		item_needed = tools.need_item(plant["item"], plant["min"])
+		item_needed = tools.need_item(farm["item"], farm["min"])
 		
 		if (not item_needed):
 			return True
 			
-		quick_print("Item ", plant["name"], " Needed")		
-
+		quick_print("Item ", farm["name"], " Needed")		
+	
 		while (item_needed):
-			if (plant["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
+			if (farm["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
 				print("Out of Power")
 				return False
-				
-			if (not tools.can_afford_item(plant["entity"])):
-				print("Cannot afford: ", plant["entity"])
+					
+			if (not tools.can_afford_item(farm["entity"])):
+				print("Cannot afford: ", farm["entity"])
 				return False
-						
-			movement.traverse_farm(factory.create_planting_function(plant))
-			bad_pumpkin_list = movement.traverse_farm_returns(factory.create_replanting_function(plant))
-			
-			while (len(bad_pumpkin_list) != 0):
-				cords = bad_pumpkin_list.pop()
-				replantFunc = factory.create_replanting_function(plant)					
-				if(cords != None):
-					movement.move_to_location(cords[0], cords[1])					
-					bad_pumpkin_list.append(replantFunc())			
+							
+			movement.traverse_farm(factory.create_planting_function(farm))
+				
+			def check_pumpkin_is_good():
+				if ((get_entity_type() == Entities.Dead_Pumpkin) or (not can_harvest())):
+					return False
+				return True							
+	
+			def look_for_bad_pumpkins():
+				if (not check_pumpkin_is_good()):
+					return (get_pos_x(), get_pos_y())
+	
+			suspect_pumpkins = movement.traverse_farm_returns(look_for_bad_pumpkins)
+			while (len(suspect_pumpkins) != 0):				
+				cords = suspect_pumpkins.pop()
+					
+				if (cords == None):
+					break
 				else:
-					pet_the_piggy()
-					bad_pumpkin_list = movement.traverse_farm_returns(replantFunc)		
-								
+					movement.move_to_location(cords[0], cords[1])
+					if (not check_pumpkin_is_good()):
+						if (get_entity_type() == Entities.Dead_Pumpkin):							
+							harvest()
+							plant(farm["entity"])
+							if (farm["fertilize"]):
+								use_item(Items.Fertilizer)	
+							suspect_pumpkins.insert(0, cords)
+						else:
+							suspect_pumpkins.insert(0, cords)
+							pet_the_piggy()
+													
 			movement.move_to_origin()
-			harvest()
-			
-			item_needed = tools.need_item(plant["item"], plant["min"])
-			
+			harvest()			
+			item_needed = tools.need_item(farm["item"], farm["min"])			
 		return True
 	return pumpkin
 
@@ -302,12 +321,42 @@ def create_dino_farm(plant):
 					can_move = false
 			change_hat(Hats.Brown_Hat)
 			item_needed = tools.need_item(plant["item"], plant["min"])
+			return True
 	return dinos
 	
+def create_polyculture_farm(farm):
+	def poly():
+		item_needed = tools.need_item(farm["item"], farm["min"])
 	
-	
-	
-	
-	
-	
-		
+		if (not item_needed):
+			return True
+
+		quick_print("Item ", farm["name"], " Needed")
+		clear() #reset the farm, quicker then retilling grounds
+
+		compainion_list = {} # (x, y):companion
+		def plant_poly():
+			pos = (get_pos_x(), get_pos_y())
+			if (compainion_list and (pos in compainion_list)):	
+				entity = compainion_list[pos]		
+				if (entity == Entities.Carrot):
+					till()			
+				plant(entity)
+			else:
+				plant(farm["entity"])
+				companion = get_companion()
+				if (not companion[0] in compainion_list):			
+					compainion_list[companion[1]] = companion[0]	
+
+		while (item_needed):		
+			if (farm["power"] and num_items(Items.Power) < static.MIN_POWER_REQ):
+				print("Out of Power")
+				return False
+
+			movement.traverse_farm(plant_poly)
+			movement.traverse_farm(tools.waiting_harvest)
+			compainion_list = {} #clear list for next run			
+			item_needed = tools.need_item(farm["item"], farm["min"])
+		return True	
+	return poly
+
