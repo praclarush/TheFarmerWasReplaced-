@@ -3,7 +3,7 @@ import tools
 def call_func(f, arg):
 	def g():
 		f(arg)
-	g()
+	return g
 
 def create_harvest_and_plant_function(entity):
 	def harvest_and_replant():
@@ -42,8 +42,8 @@ def create_planting_function(entity):
 		if (get_ground_type() != entity["ground"]):
 			till()			
 		if (entity["water"]):
-			tools.water_ground()			
-		plant(entity["entity"])		
+			tools.water_ground()						
+		plant(entity["entity"])				
 		if (entity["fertilize"]):
 			use_item(Items.Fertilizer)	
 		return tools.get_current_pos()
@@ -55,14 +55,22 @@ def create_tilling_function(ground_type):
 			till()
 	return set_ground_type		
 	
-def create_plant_tree_function():
+def create_plant_tree_function(entity, plant_bush_in_gaps):
 	def plant_tree():
 		current_X = get_pos_x()
 		current_Y = get_pos_y()
+
+		if (entity["water"]):
+			tools.water_ground()									
 		
 		if ((tools.is_even(current_X) and not tools.is_even(current_Y)) or (tools.is_even(current_Y) and not tools.is_even(current_X))):
 			plant(Entities.Tree)		
 		else:
-			plant(Entities.Bush)	
+			if (plant_bush_in_gaps):
+				plant(Entities.Bush)	
+			
+		if (entity["fertilize"]):
+			use_item(Items.Fertilizer)	
+			
 	return plant_tree
 	
