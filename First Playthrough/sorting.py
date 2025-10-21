@@ -1,4 +1,4 @@
-import movement
+from movement import move_to_location
 
 #bubble sort ref = https://en.wikipedia.org/wiki/Bubble_sort
 
@@ -38,8 +38,10 @@ def bubble_sort(x_edge, y_edge):
 
 				move(North)
 			move(East)
-			movement.move_to_location(get_pos_x(), 0)
-		movement.move_to_location(0, get_pos_y())
+			move_to_location(get_pos_x(), 0)
+		move_to_location(0, get_pos_y())
 
 		if (max_x_swap == 0 and max_y_swap == 0):
 			return True
+
+#TODO: explor A* 

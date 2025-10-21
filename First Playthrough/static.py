@@ -1,4 +1,3 @@
-import __builtins__
 ALL_DIRECTIONS = [North, South, East, West]
 
 MIN_POWER_REQ = 500
@@ -98,7 +97,7 @@ Farms = [
 		"min":4100000,
 		"badEntity": Entities.Dead_Pumpkin,
 		"worldSize": get_world_size(),
-		"enabled": True
+		"enabled": False
 	},
 	{
 		"name":"CactusFarm",
@@ -109,10 +108,10 @@ Farms = [
 		"fertilize": False,
 		"water": False,
 		"power": True, 
-		"min":75000,
+		"min":2600000,
 		"badEntity": None,
 		"worldSize": 12,
-		"enabled": False		
+		"enabled": True		
 	},
 	{	
 		"name":"MazeFarm",
@@ -199,9 +198,6 @@ Farms = [
 		"enabled": True		
 	}
 ]
-
-
-
 
 def get_farm_by_item(item):
 	for farm in Farms:

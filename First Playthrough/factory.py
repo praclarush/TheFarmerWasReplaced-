@@ -1,4 +1,4 @@
-import tools
+from tools import get_current_pos, is_even, water_ground
 
 def call_func(f, arg):
 	def g():
@@ -30,11 +30,11 @@ def create_messured_planting_function(entity):
 		if (get_ground_type() != entity["ground"]):
 			till()			
 		if (entity["water"]):
-			tools.water_ground()	
+			water_ground()	
 		if (entity["fertilize"]):
 			use_item(Items.Fertilizer)			
 		plant(entity["entity"])		
-		return (tools.get_current_pos(), measure())
+		return (get_current_pos(), measure())
 	return mesured_planting_function
 
 def create_planting_function(entity):
@@ -46,7 +46,7 @@ def create_planting_function(entity):
 		plant(entity["entity"])				
 		if (entity["fertilize"]):
 			use_item(Items.Fertilizer)	
-		return tools.get_current_pos()
+		return get_current_pos()
 	return planting_function
 	
 def create_tilling_function(ground_type):
@@ -61,9 +61,9 @@ def create_plant_tree_function(entity, plant_bush_in_gaps):
 		current_Y = get_pos_y()
 
 		if (entity["water"]):
-			tools.water_ground()									
+			water_ground()									
 		
-		if ((tools.is_even(current_X) and not tools.is_even(current_Y)) or (tools.is_even(current_Y) and not tools.is_even(current_X))):
+		if ((is_even(current_X) and not is_even(current_Y)) or (is_even(current_Y) and not is_even(current_X))):
 			plant(Entities.Tree)		
 		else:
 			if (plant_bush_in_gaps):

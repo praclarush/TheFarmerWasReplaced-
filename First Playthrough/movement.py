@@ -1,4 +1,4 @@
-import static
+from static import ALL_DIRECTIONS
 
 def get_opposite_direction(direction):
 	if (direction == North):
@@ -19,7 +19,7 @@ def explore_path(direction, target):
 		harvest()
 		return True
 
-	for explore_direction in static.ALL_DIRECTIONS:
+	for explore_direction in ALL_DIRECTIONS:
 		if (get_opposite_direction(explore_direction) == direction):
 			continue
 
