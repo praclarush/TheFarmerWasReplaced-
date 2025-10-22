@@ -15,6 +15,11 @@ def water_ground():
 		while (get_water() < 0.75):
 			use_item(Items.Water)	
 
+def fertilize():
+	if (num_items(Items.Fertilizer) < 100):
+		use_item(Items.Fertilizer)
+
+
 def get_entity_from_item(item = Items.Hay):
 	if (item == Items.Hay):
 		return Entities.Grass

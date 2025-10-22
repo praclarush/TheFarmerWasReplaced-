@@ -1,5 +1,5 @@
 from movement import *
-from tools import need_item, is_even, can_afford_item, generate_maze, waiting_harvest
+from tools import need_item, is_even, can_afford_item, generate_maze, waiting_harvest, fertilize
 from factory import create_planting_function, create_plant_tree_function, create_messured_planting_function
 from sorting import bubble_sort
 from static import MIN_POWER_REQ
@@ -166,7 +166,7 @@ def create_pumpkin_farm(farm):
 							harvest()
 							plant(farm["entity"])
 							if (farm["fertilize"]):
-								use_item(Items.Fertilizer)	
+								fertilize()
 							suspect_pumpkins.insert(0, cords)
 						else:
 							suspect_pumpkins.insert(0, cords)

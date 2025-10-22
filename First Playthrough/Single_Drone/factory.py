@@ -1,4 +1,4 @@
-from tools import get_current_pos, is_even, water_ground
+from tools import get_current_pos, is_even, water_ground, fertilize
 
 def call_func(f, arg):
 	def g():
@@ -17,11 +17,11 @@ def create_replanting_function(entity):
 			if (entity["badEntity"] != None and get_entity_type() == entity["badEntity"]):			
 				harvest()
 				if (entity["water"]):
-					tools.water_ground()
+					water_ground()
 				if (entity["fertilize"]):
-					use_item(Items.Fertilizer)			
+					fertilize()		
 				plant(entity["entity"])				
-				return tools.get_current_pos()		
+				return get_current_pos()		
 		return None
 	return replant_function
 	
@@ -32,7 +32,7 @@ def create_messured_planting_function(entity):
 		if (entity["water"]):
 			water_ground()	
 		if (entity["fertilize"]):
-			use_item(Items.Fertilizer)			
+			fertilize()		
 		plant(entity["entity"])		
 		return (get_current_pos(), measure())
 	return mesured_planting_function
@@ -42,10 +42,10 @@ def create_planting_function(entity):
 		if (get_ground_type() != entity["ground"]):
 			till()			
 		if (entity["water"]):
-			tools.water_ground()						
+			water_ground()						
 		plant(entity["entity"])				
 		if (entity["fertilize"]):
-			use_item(Items.Fertilizer)	
+			fertilize()	
 		return get_current_pos()
 	return planting_function
 	
