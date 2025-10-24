@@ -1,5 +1,5 @@
 from movement import move_to_origin
-from static import Farms
+from static import Farm_Configs
 from farmUtil import create_farm_function
 
 def main():	
@@ -16,7 +16,7 @@ def main():
 		else:
 			check_loop = True
 			
-		for farm in Farms:
+		for farm in Farm_Configs:
 			quick_print("Checking ", farm["name"])						
 			if (farm["enabled"]):
 				config_world_size = farm["worldSize"]

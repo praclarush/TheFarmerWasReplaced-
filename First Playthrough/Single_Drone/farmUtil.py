@@ -327,7 +327,7 @@ def create_dino_farm(farm):
 					break
 			
 				if (not move_to_y_position(0)):
-					can_move = false
+					can_move = False
 			
 				if (not move_to_x_position(0)):
 					can_move = false

@@ -6,7 +6,7 @@ import factory
 
 def test_single_farm(farmName):
 	clear()
-	farm = static.get_farm_by_name(farmName)
+	farm = static.get_config_by_name(farmName)
 
 	quick_print("Testing ", farm["name"])
 	#farm["min"] = num_items(farm["item"]) + 1
@@ -22,7 +22,7 @@ def test_single_farm(farmName):
 def test_all_farms():
 	clear()
 
-	for farm in static.Farms:
+	for farm in static.Farm_Configs:
 		quick_print("Testing ", farm["name"])
 		farm["min"] = num_items(farm["item"]) + 1
 
@@ -33,5 +33,5 @@ def test_all_farms():
 		farmFunction()
 		movement.move_to_origin()
 
-test_single_farm("MazeFarm")
-#test_all_farms()
+#test_single_farm("MazeFarm")
+test_all_farms()
